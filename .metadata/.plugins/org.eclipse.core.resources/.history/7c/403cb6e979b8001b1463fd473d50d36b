@@ -170,12 +170,7 @@ public class Rent {
 		
 		
 		//String columns[] = {"Car Number","Make","Available","License Plate","Price"};
-		Vector<String>columns = new Vector<String>();
-		columns.add("Car Number");
-		columns.add("Make");
-		columns.add("Available");
-		columns.add("License Plate");
-		columns.add("Price");
+		Vector<Vector<String>>columns = new Vector<Vector<String>>();
 		table = new JTable(informations,columns);
 		table.setBounds(235, 57, 324, 300);
 		frame.getContentPane().add(table);

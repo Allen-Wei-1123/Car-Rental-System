@@ -133,11 +133,7 @@ public class Return {
 		btnNewButton.setBounds(88, 225, 67, 26);
 		frame.getContentPane().add(btnNewButton);
 		
-//		String columns[] = {"Custom ID","Car ID","Days"};
-		Vector<String> columns = new Vector<String>();
-		columns.add("Custom ID");
-		columns.add("Car ID");
-		columns.add("Days");
+		String columns[] = {"Custom ID","Car ID","Days"};
 		table = new JTable(informations,columns);
 		table.setBounds(244, 53, 1, 1);
 		table.setSize(200,200);

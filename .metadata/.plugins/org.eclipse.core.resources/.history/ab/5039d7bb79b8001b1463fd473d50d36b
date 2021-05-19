@@ -83,13 +83,7 @@ public class Rent {
 				String val_ = Integer.toString(val);
 				String arr[] = {carnum,make,available,LP,val_};
 				System.out.print(LP);
-				Vector<String> tmp = new Vector<String>();
-				tmp.add(carnum);
-				tmp.add(make);
-				tmp.add(available);
-				tmp.add(LP);
-				tmp.add(val_);
-				informations.add(tmp);
+				
 			}
 			
 		}catch(Exception exc) {
@@ -169,13 +163,7 @@ public class Rent {
 		frame.getContentPane().add(DateField);
 		
 		
-		//String columns[] = {"Car Number","Make","Available","License Plate","Price"};
-		Vector<String>columns = new Vector<String>();
-		columns.add("Car Number");
-		columns.add("Make");
-		columns.add("Available");
-		columns.add("License Plate");
-		columns.add("Price");
+		String columns[] = {"Car Number","Make","Available","License Plate","Price"};
 		table = new JTable(informations,columns);
 		table.setBounds(235, 57, 324, 300);
 		frame.getContentPane().add(table);

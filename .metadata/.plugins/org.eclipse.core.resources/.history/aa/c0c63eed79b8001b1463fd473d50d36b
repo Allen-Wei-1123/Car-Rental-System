@@ -175,7 +175,7 @@ public class Rent {
 		columns.add("Make");
 		columns.add("Available");
 		columns.add("License Plate");
-		columns.add("Price");
+		columns.add("License Plate");
 		table = new JTable(informations,columns);
 		table.setBounds(235, 57, 324, 300);
 		frame.getContentPane().add(table);

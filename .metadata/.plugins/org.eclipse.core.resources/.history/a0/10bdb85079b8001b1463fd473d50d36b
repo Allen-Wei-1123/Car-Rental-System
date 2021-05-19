@@ -330,7 +330,7 @@ public class CarRegistration {
 				
 				try {
 					if(available == "No") {
-						JOptionPane.showMessageDialog(null,"Cannot Delete Rented Cars!"); 
+						JOptionPane.showMessageDialog(null,"Cannot Delete Rented Cars"); 
 						return;
 					}
 					Connection	myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/CarRentals","root","admin12345");

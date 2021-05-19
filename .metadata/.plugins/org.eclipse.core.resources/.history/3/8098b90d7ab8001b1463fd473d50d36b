@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Vector;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -49,7 +48,7 @@ public class Return {
 	/**
 	 * Create the application.
 	 */
-	Vector<Vector<String>> informations = new Vector<Vector<String>>();
+	public static String[][] informations = new String[10][3];
 	public void SetUpTable() {
 		try {
 			//1.Get Connection to Database
@@ -65,11 +64,7 @@ public class Return {
 				
 				String val_ = Integer.toString(days);
 				String arr[] = {carnum,make,val_};
-				Vector<String> tmp = new Vector<String>();
-				tmp.add(carnum);
-				tmp.add(make);
-				tmp.add(val_);
-				informations.add(tmp);
+				informations[ind++]=arr;
 			}
 			
 		}catch(Exception exc) {
@@ -133,11 +128,7 @@ public class Return {
 		btnNewButton.setBounds(88, 225, 67, 26);
 		frame.getContentPane().add(btnNewButton);
 		
-//		String columns[] = {"Custom ID","Car ID","Days"};
-		Vector<String> columns = new Vector<String>();
-		columns.add("Custom ID");
-		columns.add("Car ID");
-		columns.add("Days");
+		String columns[] = {"Custom ID","Car ID","Days"};
 		table = new JTable(informations,columns);
 		table.setBounds(244, 53, 1, 1);
 		table.setSize(200,200);

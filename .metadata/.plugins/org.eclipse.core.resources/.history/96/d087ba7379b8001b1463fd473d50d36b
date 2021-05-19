@@ -15,7 +15,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.sql.*;
-import java.util.Vector;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 public class Rent {
@@ -62,8 +61,8 @@ public class Rent {
 	/**
 	 * Create the application.
 	 */
-	//public static String[][] informations = new String[100][5];
-	Vector<Vector<String>> informations = new Vector<Vector<String>>();
+	public static String[][] informations = new String[100][5];
+	
 	public void SetUpTable() {
 		try {
 			//1.Get Connection to Database
@@ -83,13 +82,7 @@ public class Rent {
 				String val_ = Integer.toString(val);
 				String arr[] = {carnum,make,available,LP,val_};
 				System.out.print(LP);
-				Vector<String> tmp = new Vector<String>();
-				tmp.add(carnum);
-				tmp.add(make);
-				tmp.add(available);
-				tmp.add(LP);
-				tmp.add(val_);
-				informations.add(tmp);
+				informations[ind++]=arr;
 			}
 			
 		}catch(Exception exc) {
@@ -120,7 +113,7 @@ public class Rent {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(false);
-		frame.setSize(600,390);
+		frame.setSize(500,400);
 		JLabel title = new JLabel("Rent a Car",SwingConstants.CENTER);
 		title.setForeground(Color.BLUE);
 		title.setFont(new Font("Lithos Pro", Font.PLAIN, 20));
@@ -169,15 +162,9 @@ public class Rent {
 		frame.getContentPane().add(DateField);
 		
 		
-		//String columns[] = {"Car Number","Make","Available","License Plate","Price"};
-		Vector<String>columns = new Vector<String>();
-		columns.add("Car Number");
-		columns.add("Make");
-		columns.add("Available");
-		columns.add("License Plate");
-		columns.add("Price");
+		String columns[] = {"Car Number","Make","Available","License Plate","Price"};
 		table = new JTable(informations,columns);
-		table.setBounds(235, 57, 324, 300);
+		table.setBounds(235, 57, 233, 300);
 		frame.getContentPane().add(table);
 		ListSelectionModel select = table.getSelectionModel();
 		select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
