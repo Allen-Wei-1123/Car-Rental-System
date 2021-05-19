@@ -1,0 +1,210 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.JTable;
+import javax.swing.JButton;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import java.sql.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+public class Rent {
+
+	private JFrame frame;
+	private JTextField CarIDField;
+	private JTextField CustIDField;
+	private JTextField FeeField;
+	private JTextField DateField;
+	private JTextField DueField;
+	private JTable table;
+	private JButton RENT;
+	private JTable table_1;
+
+	/**
+	 * Launch the application.
+	 */
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Rent window = new Rent();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		try {
+			//1.Get Connection to Database
+		Connection	myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/CarRentals","root","admin12345");
+			Statement myStmt = myConn.createStatement();
+			ResultSet myrs = myStmt.executeQuery("select * from CarsInfo;");
+			while(myrs.next()) {
+				System.out.println(myrs.getString("CarNumber"));
+			}
+			
+		}catch(Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public static String[][] informations = new String[100][5];
+	
+	public void SetUpTable() {
+		try {
+			//1.Get Connection to Database
+		Connection	myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/CarRentals","root","admin12345");
+			Statement myStmt = myConn.createStatement();
+			//ResultSet myrs = myStmt.executeQuery("select * from CarsInfo;");
+			PreparedStatement statement = myConn.prepareStatement("select * from CarsInfo where Available = (?)");
+			statement.setString(1, "Yes");
+			ResultSet myrs = statement.executeQuery();
+			int ind =0 ;
+			while(myrs.next()) {
+				String carnum = myrs.getString("CarNumber");
+				String make = myrs.getString("Make");
+				String available = myrs.getString("Available");
+				String LP = myrs.getString("LicensePlate");
+				int val = myrs.getInt("Price");
+				String val_ = Integer.toString(val);
+				String arr[] = {carnum,make,available,LP,val_};
+				System.out.print(LP);
+				informations[ind++]=arr;
+			}
+			
+		}catch(Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	
+	public Rent() {
+		SetUpTable();
+		initialize();
+	}
+	public  void changeVisible() {
+		frame.setVisible(true);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.getContentPane().setFont(new Font("Dialog", Font.PLAIN, 12));
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setVisible(false);
+		frame.setSize(500,400);
+		JLabel title = new JLabel("Rent a Car",SwingConstants.CENTER);
+		title.setForeground(Color.BLUE);
+		title.setFont(new Font("Lithos Pro", Font.PLAIN, 20));
+		title.setBounds(148, 18, 170, 27);
+		frame.getContentPane().add(title);
+		
+		JLabel CarID = new JLabel("Car ID");
+		CarID.setFont(new Font("Dialog", Font.PLAIN, 12));
+		CarID.setBounds(6, 73, 61, 16);
+		frame.getContentPane().add(CarID);
+		
+		JLabel customerID = new JLabel("Customer ID");
+		customerID.setFont(new Font("Dialog", Font.PLAIN, 12));
+		customerID.setBounds(6, 111, 79, 16);
+		frame.getContentPane().add(customerID);
+		
+		JLabel lblRetailFee = new JLabel("Retail Fee");
+		lblRetailFee.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblRetailFee.setBounds(6, 149, 61, 16);
+		frame.getContentPane().add(lblRetailFee);
+		
+		JLabel lblDate = new JLabel("Date");
+		lblDate.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblDate.setBounds(6, 187, 61, 16);
+		frame.getContentPane().add(lblDate);
+		
+		JLabel lblDueDate = new JLabel("Due Date");
+		lblDueDate.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
+		lblDueDate.setBounds(6, 225, 61, 16);
+		frame.getContentPane().add(lblDueDate);
+		
+		CarIDField = new JTextField();
+		CarIDField.setBounds(93, 68, 130, 26);
+		frame.getContentPane().add(CarIDField);
+		CarIDField.setColumns(10);
+		
+		CustIDField = new JTextField();
+		CustIDField.setColumns(10);
+		CustIDField.setBounds(93, 106, 130, 26);
+		frame.getContentPane().add(CustIDField);
+		
+		FeeField = new JTextField();
+		FeeField.setColumns(10);
+		FeeField.setBounds(93, 144, 130, 26);
+		frame.getContentPane().add(FeeField);
+		
+		DateField = new JTextField();
+		DateField.setColumns(10);
+		DateField.setBounds(93, 182, 130, 26);
+		frame.getContentPane().add(DateField);
+		
+		DueField = new JTextField();
+		DueField.setColumns(10);
+		DueField.setBounds(93, 220, 130, 26);
+		frame.getContentPane().add(DueField);
+		
+		
+		String columns[] = {"Car Number","Make","Available","License Plate","Price"};
+		table = new JTable(informations,columns);
+		table.setBounds(235, 57, 233, 300);
+		frame.getContentPane().add(table);
+		ListSelectionModel select = table.getSelectionModel();
+		select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		select.addListSelectionListener(new ListSelectionListener() {  
+            public void valueChanged(ListSelectionEvent e) {  
+            		int row = table.getSelectedRow();
+            }       
+          });  
+		
+		//submit button
+		RENT = new JButton("Rent");
+		RENT.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String carID = CarIDField.getText();
+				String customer = CustIDField.getText();
+				String fees = FeeField.getText();
+				String date = DateField.getText();
+				String due = DueField.getText();
+				if(carID.isEmpty() || customer.isEmpty() || fees.isEmpty() || date.isEmpty() || due.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Some fields are empty");
+					return;
+				}
+				
+			}
+		});
+		RENT.setBounds(48, 279, 130, 43);
+		frame.getContentPane().add(RENT);
+		
+		table_1 = new JTable();
+		table_1.setBounds(317, 88, 1, 1);
+		frame.getContentPane().add(table_1);
+	}
+}
