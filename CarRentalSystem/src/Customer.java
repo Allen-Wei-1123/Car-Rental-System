@@ -11,6 +11,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.sql.*;
+import java.util.Vector;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 public class Customer {
@@ -40,6 +41,9 @@ public class Customer {
 	/**
 	 * Create the application.
 	 */
+	
+	
+	
 	public Customer() {
 		initialize();
 	}

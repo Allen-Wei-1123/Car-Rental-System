@@ -185,6 +185,9 @@ public class CarRegistration {
 		RadioOff.setBounds(178, 191, 54, 20);
 		frame.getContentPane().add(RadioOff);
 		
+		
+		
+		
 		ButtonGroup G1 = new ButtonGroup();
 		G1.add(RadioOn);
 		G1.add(RadioOff);
@@ -202,11 +205,16 @@ public class CarRegistration {
 		
 		
 		model.setColumnIdentifiers(columns);
-		table = new JTable(model);
+		table = new JTable(model) {
+			public boolean editCellAt(int row, int column, java.util.EventObject e) {
+	            return false;
+	         }
+		};
 		
 		  
 		
 		table.setBounds(280, 80, 300, 197);
+		
 		//table.setSize(200,200);
 		
 		frame.getContentPane().add(table);
@@ -240,13 +248,21 @@ public class CarRegistration {
             		String availability = table.getModel().getValueAt(row, 2).toString();
             		String price_ = table.getModel().getValueAt(row, 4).toString();
             		Price.setText(price_);
-//            		System.out.print(b);
-            		if(availability.toLowerCase() == "yesyes") {
-            			RadioOn.setSelected(true);
-            		}else {
-//            			System.out.print(availability.toLowerCase());
-            			RadioOff.setSelected(true);
+            		
+            		if(!e.getValueIsAdjusting()) {
+            			//System.out.print(availability);
+            			G1.clearSelection();
+            			String tmp = availability.toLowerCase();
+            			if(tmp.equals("yes")) {
+            				RadioOff.setSelected(false);
+                			RadioOn.setSelected(true);
+                		}else {
+                			System.out.print(availability.toLowerCase());
+                			RadioOn.setSelected(false);
+                			RadioOff.setSelected(true);
+                		}
             		}
+            		
             }       
           });  
 		

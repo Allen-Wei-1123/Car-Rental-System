@@ -18,11 +18,11 @@ import java.sql.*;
 import java.util.Vector;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 public class Rent {
 
 	private JFrame frame;
 	private JTextField CarIDField;
-	private JTextField CustIDField;
 	private JTextField FeeField;
 	private JTextField DateField;
 	private JTable table;
@@ -98,7 +98,26 @@ public class Rent {
 	}
 	
 	
+	Vector<Integer> CustomerList = new Vector<Integer>();
+	public void GetAllCustomers() {
+		try {
+			Connection	myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/CarRentals","root","admin12345");
+			String val = "Select * from customers;";
+			PreparedStatement stmt = myConn.prepareStatement(val);
+			ResultSet customerlist_ = stmt.executeQuery();
+			while(customerlist_.next()) {
+				int idnum = customerlist_.getInt("id");
+				CustomerList.add(idnum);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public Rent() {
+		GetAllCustomers();
 		SetUpTable();
 		initialize();
 	}
@@ -113,6 +132,7 @@ public class Rent {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	public Integer SelectedCustomer;
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -151,11 +171,7 @@ public class Rent {
 		CarIDField.setBounds(93, 68, 130, 26);
 		frame.getContentPane().add(CarIDField);
 		CarIDField.setColumns(10);
-		
-		CustIDField = new JTextField();
-		CustIDField.setColumns(10);
-		CustIDField.setBounds(93, 106, 130, 26);
-		frame.getContentPane().add(CustIDField);
+		CarIDField.setEditable(false);
 		
 		FeeField = new JTextField();
 		FeeField.setColumns(10);
@@ -202,7 +218,7 @@ public class Rent {
 		RENT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String carID = CarIDField.getText();
-				String customer = CustIDField.getText();
+			//	String customer = CustIDField.getText();
 				String fees = FeeField.getText();
 				String date = DateField.getText();
 				
@@ -214,7 +230,7 @@ public class Rent {
 					Connection	myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/CarRentals","root","admin12345");
 					
 					PreparedStatement statement = myConn.prepareStatement("insert into RentRecords(customerid,carid,days) values (?,?,?);");
-					statement.setString(1, customer);
+					statement.setInt(1, SelectedCustomer);
 					statement.setString(2, carID);
 					int date_ = Integer.parseInt(date);
 					statement.setInt(3, date_);
@@ -244,5 +260,21 @@ public class Rent {
 		table_1 = new JTable();
 		table_1.setBounds(317, 88, 1, 1);
 		frame.getContentPane().add(table_1);
+		
+		JComboBox comboBox = new JComboBox(CustomerList);
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SelectedCustomer = (Integer) comboBox.getSelectedItem();
+				System.out.print(SelectedCustomer);
+			}
+		});
+		comboBox.setBounds(93, 107, 130, 27);
+		comboBox.setSelectedIndex(0);
+		frame.getContentPane().add(comboBox);
+		//SelectedCustomer = (Integer) comboBox.getSelectedItem();
+		
+		//System.out.print("it is "+comboBox.getSelectedItem().toString());
+		
+		
 	}
 }
