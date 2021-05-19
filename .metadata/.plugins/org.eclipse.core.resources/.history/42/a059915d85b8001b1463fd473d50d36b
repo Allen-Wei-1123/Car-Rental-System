@@ -142,13 +142,15 @@ public class Return {
 		columns.add("Custom ID");
 		columns.add("Car ID");
 		columns.add("Days");
-		table = new JTable(informations,columns){
+		table = new JTable(informations,columns);
+		table.setBounds(244, 53, 1, 1);
+		table.setSize(200,200);
+		DefaultTableModel model = new DefaultTableModel(informations,columns);
+		table = new JTable(model) {
 			public boolean editCellAt(int row, int column, java.util.EventObject e) {
 	            return false;
 	         }
-		};;
-		table.setBounds(244, 53, 1, 1);
-		table.setSize(200,200);
+		};
 		
 		
 		frame.getContentPane().add(table);

@@ -18,7 +18,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -142,15 +141,9 @@ public class Return {
 		columns.add("Custom ID");
 		columns.add("Car ID");
 		columns.add("Days");
-		table = new JTable(informations,columns){
-			public boolean editCellAt(int row, int column, java.util.EventObject e) {
-	            return false;
-	         }
-		};;
+		table = new JTable(informations,columns);
 		table.setBounds(244, 53, 1, 1);
 		table.setSize(200,200);
-		
-		
 		frame.getContentPane().add(table);
 		
 		ListSelectionModel select = table.getSelectionModel();

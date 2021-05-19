@@ -18,7 +18,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -118,18 +117,15 @@ public class Return {
 		carid.setBounds(108, 53, 130, 26);
 		frame.getContentPane().add(carid);
 		carid.setColumns(10);
-		carid.setEditable(false);
 		
 		custid = new JTextField();
 		custid.setColumns(10);
 		custid.setBounds(108, 99, 130, 26);
-		custid.setEditable(false);
 		frame.getContentPane().add(custid);
 		
 		day = new JTextField();
 		day.setColumns(10);
 		day.setBounds(108, 144, 130, 26);
-		day.setEditable(false);
 		frame.getContentPane().add(day);
 		
 		JButton btnNewButton = new JButton("Return");
@@ -142,15 +138,9 @@ public class Return {
 		columns.add("Custom ID");
 		columns.add("Car ID");
 		columns.add("Days");
-		table = new JTable(informations,columns){
-			public boolean editCellAt(int row, int column, java.util.EventObject e) {
-	            return false;
-	         }
-		};;
+		table = new JTable(informations,columns);
 		table.setBounds(244, 53, 1, 1);
 		table.setSize(200,200);
-		
-		
 		frame.getContentPane().add(table);
 		
 		ListSelectionModel select = table.getSelectionModel();

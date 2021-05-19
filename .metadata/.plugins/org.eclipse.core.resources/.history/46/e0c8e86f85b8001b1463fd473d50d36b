@@ -192,11 +192,7 @@ public class Rent {
 		columns.add("Available");
 		columns.add("License Plate");
 		columns.add("Price");
-		table = new JTable(informations,columns){
-			public boolean editCellAt(int row, int column, java.util.EventObject e) {
-	            return false;
-	         }
-		};;
+		table = new JTable(informations,columns);
 		table.setBounds(235, 57, 324, 300);
 		frame.getContentPane().add(table);
 		ListSelectionModel select = table.getSelectionModel();
